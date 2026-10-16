@@ -1,4 +1,4 @@
 export type CartItem = {
-    product : string
+    product : string,
     quantity : number 
 }
