@@ -18,7 +18,7 @@ export const request = async<T>(path: string, method: string, body: unknown): Pr
     }
     const response: Response = await fetch(url, settings);
     if (response.ok === false){
-        throw new Error("Requuest failed with status " + response.status);
+        throw new Error("Request failed with status " + response.status);
     }
     const data = (await response.json()) as T;
     return data
