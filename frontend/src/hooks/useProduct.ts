@@ -1,31 +1,33 @@
 import { useCallback, useEffect, useState } from "react";
-import { getProducts } from "../api/product";
+import { getProduct } from "../api/product";
 import type { product } from "../types/products";
 
-const useProducts = () => {
-    const [ products, setProducts ] = useState<product[]>([]);
+const useProduct = (id: number) => {
+    const [ product, setProduct ] = useState<product[]>([]);
     const [ loading, setLoading ] = useState(true);
     const [ error, setError ] = useState("");
 
-    const loadProducts = useCallback(async() => {
+    const loadProduct = useCallback(async() => {
         setLoading(true)
         setError("")
 
         try {
-            const data = await getProducts()
-            setProducts(data)
-        }catch{
-            setError("Error loading the products")
-        }finally {
+            const data = await getProduct(id);
+            setProduct(data)
+        } catch {
+            setError("Unable to load products")
+        } finally {
             setLoading(false)
         }
-
-    }, []);
+    }, [id]);
 
     useEffect(() => {
-        void Promise.resolve().then(loadProducts);
-    }, [loadProducts])
+        const task = Promise.resolve().then(loadProduct);
+        return () => {
+            void task;
+        };
+    }, [loadProduct]);
 
-    return { products, loading, error, refetch: loadProducts };
+    return { product, loading, error, refetch: loadProduct };
 }
-export default useProducts
+export default useProduct
