@@ -4,7 +4,9 @@ import type { product } from '../types/products';
 
 
 
-const CartContext = createContext({})
+// This context must stay in this file; exempt it from the component-only export rule.
+// eslint-disable-next-line react-refresh/only-export-components
+export const CartContext = createContext({})
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
     type CartItem = product & { quantity: number };
@@ -29,6 +31,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
                 setLoaded(true)
             }
         }
+
+        void loadCart();
     }, [])
 
     // then i save the items when adding after load
