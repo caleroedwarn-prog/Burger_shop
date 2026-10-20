@@ -7,7 +7,7 @@ type PillProp = {
     onPress: () => void;
 }
 
-const Category = memo(({label, selected, onPress}: PillProp) => {
+export const Category = memo(({label, selected, onPress}: PillProp) => {
     return (
         <div className="Category_nav">
             <button onClick={onPress} style={{...style.base, ...selected ? style.selected : style.unselected}}>
