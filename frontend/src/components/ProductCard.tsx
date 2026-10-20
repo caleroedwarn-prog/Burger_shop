@@ -1,4 +1,5 @@
 import type { product } from "../types/products";
+import { memo } from "react";
 import { color } from "../constants/colors";
 
 type ProductCardProps = {
@@ -7,7 +8,7 @@ type ProductCardProps = {
     onAdd: () => void;
 }
 
-export default function ProductCard( { product, onPress, onAdd }: ProductCardProps) {
+export const ProductCard = memo(( { product, onPress, onAdd }: ProductCardProps) => {
     return (
         <>
         <div 
@@ -50,4 +51,4 @@ export default function ProductCard( { product, onPress, onAdd }: ProductCardPro
             </div>
         </>
     );
-}
+});

@@ -1,4 +1,5 @@
 import type { CartItem } from "../types/cart";
+import { memo } from "react";
 import { color } from "../constants/colors";
 
 type cartItemProps = {
@@ -8,12 +9,12 @@ type cartItemProps = {
     onRemove: () => void;
 }
 
-export default function Cartitem({
+export const cartItem = memo(({
     item,
     onIncrease,
     onDecrease,
     onRemove,
-}: cartItemProps) {
+}: cartItemProps)  => {
     return (
         <div className="Cart_Item_box">
         <div className="product_Image">
@@ -39,4 +40,4 @@ export default function Cartitem({
            </div>
         </div>
     )
-}
+});

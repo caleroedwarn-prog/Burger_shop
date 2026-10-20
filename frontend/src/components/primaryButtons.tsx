@@ -1,4 +1,5 @@
 import { color } from "../constants/colors";
+import { memo } from "react";
 
 
 
@@ -9,7 +10,7 @@ type buttonProps = {
     disabled?: boolean; 
 };
 
-export default function CustomButton({title, onPress,  loading = false, disabled = false}: buttonProps) {
+export const CustomButton = memo(({title, onPress,  loading = false, disabled = false}: buttonProps) => {
     const isDisabled = disabled || loading;
 
     return (
@@ -27,4 +28,4 @@ export default function CustomButton({title, onPress,  loading = false, disabled
             {loading ? <span>⏳</span> : title}
         </button>
     )
-}
+});
