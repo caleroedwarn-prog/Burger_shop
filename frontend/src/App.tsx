@@ -1,4 +1,4 @@
-import CustomButton from "./components/primaryButtons"
+import {CustomButton} from "./components/primaryButtons"
 
 
 
