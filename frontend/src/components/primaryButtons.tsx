@@ -15,7 +15,10 @@ export const CustomButton = memo(({title, onPress,  loading = false, disabled = 
 
     return (
         <button
-        onClick={onPress}
+        onClick={(e) => {
+            e.stopPropagation();
+            onPress();
+        }}
         disabled={isDisabled}
         style={{
             background: isDisabled? "grey" : color.primary,
