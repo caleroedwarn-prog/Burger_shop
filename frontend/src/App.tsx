@@ -1,4 +1,5 @@
-import {CustomButton} from "./components/primaryButtons"
+
+import HomePage from "./pages/Home"
 
 
 
@@ -7,7 +8,7 @@ function App() {
 
   return (
     <>
-    <CustomButton title="Order Now" onPress={() => {}} />
+      <HomePage />
     </>
   )
 }

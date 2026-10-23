@@ -8,7 +8,7 @@ type ProductCardProps = {
     onAdd: () => void;
 }
 
-export const ProductCard = memo(( { product, onPress, onAdd }: ProductCardProps) => {
+ const productCard = memo(( { product, onPress, onAdd }: ProductCardProps) => {
     return (
         <>
         <div 
@@ -52,3 +52,5 @@ export const ProductCard = memo(( { product, onPress, onAdd }: ProductCardProps)
         </>
     );
 });
+
+export default productCard
