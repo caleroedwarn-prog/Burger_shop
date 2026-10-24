@@ -1,4 +1,16 @@
-.logo img{
- width: 15%;
- 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1%;
+}
+
+.logo img {
+    width: 16%;
+    object-fit: contain;
+}
+
+.logo p {
+    margin: 0;
+    font-size: 3.1rem;
+    font-weight: 600;
 }
