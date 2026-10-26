@@ -4,12 +4,23 @@ import type { product } from '../types/products';
 
 
 
+type CartItem = product & { quantity: number };
+
+type CartContextType = {
+    items: CartItem[];
+    addItem: (item: product) => void;
+    removeItem: (productId: string | number) => void;
+    changeQuantity: (productId: string | number, newQuantity: number) => void;
+    clearCart: () => void;
+    totalCount: number;
+    totalPrice: number;
+};
+
 // This context must stay in this file; exempt it from the component-only export rule.
 // eslint-disable-next-line react-refresh/only-export-components
-export const CartContext = createContext(null)
+export const CartContext = createContext<CartContextType | null>(null);
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-    type CartItem = product & { quantity: number };
     const [ items, setItems] = useState<CartItem[]>([]);
     const [ loaded, setLoaded] = useState(false);
 
