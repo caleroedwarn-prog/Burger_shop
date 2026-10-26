@@ -6,7 +6,7 @@ import type { product } from '../types/products';
 
 // This context must stay in this file; exempt it from the component-only export rule.
 // eslint-disable-next-line react-refresh/only-export-components
-export const CartContext = createContext({})
+export const CartContext = createContext(null)
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
     type CartItem = product & { quantity: number };

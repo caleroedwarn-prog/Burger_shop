@@ -10,4 +10,4 @@ const UseCart = () => {
     }
     return context
 }
-export default UseCart
+export default UseCart;
