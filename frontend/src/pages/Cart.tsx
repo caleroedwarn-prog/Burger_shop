@@ -5,12 +5,16 @@ import { CustomButton } from "../components/primaryButtons";
 import { useNavigate } from "react-router-dom";
 
 type CartItemData = {
-    product: {
+    id?: number;
+    product?: {
         id: number;
         name: string;
         image: string;
         price: number;
     };
+    name?: string;
+    image?: string;
+    price?: number;
     quantity: number;
 };
 
@@ -22,10 +26,24 @@ type UseCartResult = {
 };
 
 function Cart() {
-    const { items, totalPrice, changeQuantity, removeItem } = UseCart() as UseCartResult;
+    const { items = [], totalPrice, changeQuantity, removeItem } = UseCart() as unknown as UseCartResult;
     const Navigate = useNavigate();
 
-    if (!items || items.length === 0) {
+    const normalizedItems = items.map((item) => {
+        const product = item.product ?? {
+            id: item.id ?? 0,
+            name: item.name ?? "Product",
+            image: item.image ?? "",
+            price: item.price ?? 0,
+        };
+
+        return {
+            ...item,
+            product,
+        };
+    });
+
+    if (!normalizedItems || normalizedItems.length === 0) {
         return <Empty message="Your Cart Empty" />;
     }
 
@@ -33,15 +51,19 @@ function Cart() {
         <div>
             <h1>Your Cart</h1>
             <div className="Cart">
-                {items.map((item) => (
-                    <CartItemRow
-                        key={item.product.id}
-                        item={item}
-                        onIncrease={() => changeQuantity(item.product.id, item.quantity + 1)}
-                        onDecrease={() => changeQuantity(item.product.id, item.quantity - 1)}
-                        onRemove={() => removeItem(item.product.id)}
-                    />
-                ))}
+                {normalizedItems.map((item) => {
+                    const productId = item.product?.id ?? item.id ?? 0;
+
+                    return (
+                        <CartItemRow
+                            key={productId}
+                            item={item}
+                            onIncrease={() => changeQuantity(productId, item.quantity + 1)}
+                            onDecrease={() => changeQuantity(productId, item.quantity - 1)}
+                            onRemove={() => removeItem(productId)}
+                        />
+                    );
+                })}
             </div>
 
             <div className="cart-footer">
