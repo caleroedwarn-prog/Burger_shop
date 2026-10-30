@@ -2,11 +2,11 @@ import type { product } from "../types/products";
 import { request } from "./client";
 
 export const getProducts = async() : Promise<product[]> => {
-    const products= await request<product[]>("/product", "GET", null);
+    const products= await request<product[]>("/products", "GET", null);
     return products
 }
 
-export const getProduct = async(id : number) : Promise<product[]> => {
-    const product = await request<product[]>("/product" + id, "GET", null);
-    return product
+export const getProduct = async(id : number) : Promise<product> => {
+    const oneProduct = await request<product>("/products/" + id, "GET", null);
+    return oneProduct
 }
