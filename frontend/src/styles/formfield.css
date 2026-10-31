@@ -1,0 +1,60 @@
+.form-field {
+  display: grid;
+  width: 100%;
+  gap: 8px;
+}
+
+.form-field-label {
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.form-field-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text);
+  transition:
+    border-color 180ms var(--ease),
+    box-shadow 180ms var(--ease);
+}
+
+.form-field-input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-focus-ring);
+}
+
+.form-field-input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.form-field-input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.form-field-input[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px var(--danger-focus-ring);
+}
+
+.form-field-input[aria-invalid="true"]:focus-visible {
+  outline-color: var(--danger);
+}
+
+.form-field-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  color: var(--danger);
+  font-size: 0.875rem;
+}
+
+.form-field-error svg {
+  flex: 0 0 auto;
+  margin-top: 3px;
+}

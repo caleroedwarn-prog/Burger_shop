@@ -1,84 +1,88 @@
-import UseCart from "../hooks/useCart";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 import { CartItemRow } from "../components/CartItemRow";
 import { Empty } from "../components/EmptyState";
 import { CustomButton } from "../components/primaryButtons";
-import { useNavigate } from "react-router-dom";
-
-type CartItemData = {
-    id?: number;
-    product?: {
-        id: number;
-        name: string;
-        image: string;
-        price: number;
-    };
-    name?: string;
-    image?: string;
-    price?: number;
-    quantity: number;
-};
-
-type UseCartResult = {
-    items: CartItemData[];
-    totalPrice: number;
-    changeQuantity: (productId: string | number, quantity: number) => void;
-    removeItem: (productId: string | number) => void;
-};
+import Seo from "../components/Seo";
+import useCart from "../hooks/useCart";
+import { formatPrice } from "../utils/formatPrice";
+import "../styles/cart.css";
 
 function Cart() {
-    const { items = [], totalPrice, changeQuantity, removeItem } = UseCart() as unknown as UseCartResult;
-    const Navigate = useNavigate();
+  const { items, totalPrice, changeQuantity, removeItem } = useCart();
+  const navigate = useNavigate();
+  const reduceMotion = useReducedMotion();
 
-    const normalizedItems = items.map((item) => {
-        const product = item.product ?? {
-            id: item.id ?? 0,
-            name: item.name ?? "Product",
-            image: item.image ?? "",
-            price: item.price ?? 0,
-        };
+  return (
+    <main className="cart-page container">
+      <Seo
+        title="Your Cart"
+        description="Review your Burger Taste order and continue to checkout."
+        image="/og-share-image.jpg"
+        path="/cart"
+      />
+      <header className="cart-page-heading">
+        <p>Your order</p>
+        <h1>Your Cart</h1>
+      </header>
 
-        return {
-            ...item,
-            product,
-        };
-    });
+      {items.length === 0 ? (
+        <Empty message="Your cart is empty." />
+      ) : (
+        <div className="cart-layout">
+          <section className="cart-items-list" aria-label="Items in your cart">
+            <AnimatePresence initial={false}>
+              {items.map((item) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={
+                    reduceMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, height: 0, x: -16, marginBottom: 0 }
+                  }
+                  transition={{ duration: reduceMotion ? 0.1 : 0.2 }}
+                >
+                  <CartItemRow
+                    item={{
+                      product: {
+                        id: item.id,
+                        name: item.name,
+                        image: item.image,
+                        price: item.price,
+                      },
+                      quantity: item.quantity,
+                    }}
+                    productHref={`/product/${item.id}`}
+                    onIncrease={() => changeQuantity(item.id, item.quantity + 1)}
+                    onDecrease={() => changeQuantity(item.id, item.quantity - 1)}
+                    onRemove={() => removeItem(item.id)}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </section>
 
-    if (!normalizedItems || normalizedItems.length === 0) {
-        return <Empty message="Your Cart Empty" />;
-    }
-
-    return (
-        <div>
-            <h1>Your Cart</h1>
-            <div className="Cart">
-                {normalizedItems.map((item) => {
-                    const productId = item.product?.id ?? item.id ?? 0;
-
-                    return (
-                        <CartItemRow
-                            key={productId}
-                            item={item}
-                            onIncrease={() => changeQuantity(productId, item.quantity + 1)}
-                            onDecrease={() => changeQuantity(productId, item.quantity - 1)}
-                            onRemove={() => removeItem(productId)}
-                        />
-                    );
-                })}
+          <aside className="cart-summary">
+            <h2>Order summary</h2>
+            <div className="cart-summary-total">
+              <span>Total</span>
+              <strong>{formatPrice(totalPrice)}</strong>
             </div>
-
-            <div className="cart-footer">
-                <p className="Cart-total-label">Total</p>
-                <p className="Cart-total-price">{totalPrice}</p>
-            </div>
-            <p>Total: ${totalPrice.toFixed(2)}</p>
-            <CustomButton 
-            title="Checkout"
-            onPress={() => Navigate("/checkout")}
-            loading={false}
-            disabled={false}
+            <CustomButton
+              title="Checkout"
+              onPress={() => navigate("/checkout")}
             />
+            <Link className="cart-continue-link" to="/menu">
+              Continue shopping
+            </Link>
+          </aside>
         </div>
-    );
+      )}
+    </main>
+  );
 }
 
 export default Cart;

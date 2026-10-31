@@ -1,0 +1,29 @@
+.message-card {
+  display: flex;
+  width: min(100% - 32px, 480px);
+  min-height: 220px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 32px auto;
+  padding: 32px 24px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.message-card-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.error-message {
+  color: var(--text);
+}
+
+.error-message .message-card-icon {
+  color: var(--danger);
+}

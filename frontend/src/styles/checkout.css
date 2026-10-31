@@ -1,0 +1,141 @@
+.checkout-page {
+  min-height: 100%;
+  padding-block: 48px 80px;
+  background: var(--bg);
+}
+
+.checkout-heading {
+  margin-bottom: 28px;
+}
+
+.checkout-heading > p {
+  margin-bottom: 8px;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  align-items: start;
+  gap: 28px;
+}
+
+.checkout-form-card,
+.checkout-summary-card {
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.checkout-form-card {
+  display: grid;
+  gap: 28px;
+}
+
+.checkout-form-section {
+  display: grid;
+  gap: 16px;
+}
+
+.checkout-form-section h2,
+.checkout-summary-card h2 {
+  font-size: 1.25rem;
+}
+
+.checkout-summary-card {
+  position: sticky;
+  top: 100px;
+}
+
+.checkout-items {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checkout-items li {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkout-items img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--bg);
+}
+
+.checkout-item-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.checkout-item-name span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.checkout-items strong {
+  font-size: 0.8125rem;
+  text-align: right;
+}
+
+.checkout-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.checkout-total strong {
+  font-size: 1.125rem;
+}
+
+.checkout-error {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--danger-surface);
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+.checkout-reassurance {
+  margin-top: -18px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.checkout-back-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary-card {
+    position: static;
+    grid-row: 1;
+  }
+}

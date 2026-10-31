@@ -1,29 +1,28 @@
+import { motion, useReducedMotion } from "framer-motion";
 import { memo } from "react";
-import { color } from "../constants/colors";
-
+import { FiShoppingBag } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import "../styles/empty.css";
 
 type messageProp = {
-    message: string;
-}
+  message: string;
+};
 
 export const Empty = memo(({ message }: messageProp) => {
-    return (
-        <div style={style.base}>
-            <p style={style.message}>{message}</p>
-        </div>
-    )
-})
+  const reduceMotion = useReducedMotion();
 
-const style = {
-     base: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        width: '100%',
-     },
-
-     message: {
-        color: color.mutedText
-     }
-}
+  return (
+    <motion.section
+      className="message-card empty-state"
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reduceMotion ? 0 : 0.2 }}
+    >
+      <FiShoppingBag className="message-card-icon" aria-hidden="true" />
+      <p>{message}</p>
+      <Link className="empty-state-link" to="/menu">
+        Browse the menu
+      </Link>
+    </motion.section>
+  );
+});

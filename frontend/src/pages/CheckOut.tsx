@@ -2,11 +2,12 @@ import type { OrderItem, OrderRequest } from "../types/order";
 import { createOrder } from "../api/order";
 import  UseCart  from "../hooks/useCart";
 import { CustomButton } from "../components/primaryButtons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useCallback } from "react";
 import { InputField } from "../components/FormField";
-
+import Seo from "../components/Seo";
+import { formatPrice } from "../utils/formatPrice";
+import "../styles/checkout.css";
 
 
 type FormErrors = {
@@ -26,7 +27,7 @@ function Checkout() {
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState("");
 
-  const validate = useCallback(() => {
+  const validate = () => {
     const newError: FormErrors = {};
 
     if (name.trim() === "") {
@@ -43,9 +44,9 @@ function Checkout() {
 
     setError(newError);
     return Object.keys(newError).length === 0;
-  }, [address, name, phone]);
+  };
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = async () => {
     setServerError('');
     if(!validate())return
     setSubmitting(true)
@@ -65,53 +66,104 @@ function Checkout() {
     try {
       await createOrder(order);
       clearCart()
-      navigate("/orderSuccess")
+      navigate("/order-success")
   
     } catch {
       setServerError("Unable to place your order. Please try again.");
     } finally {
       setSubmitting(false);
     }
-  }, [address, clearCart, items, name, navigate, phone, validate]);
+  };
 
   return (
-    <div className="">
-      <h1>Checkout</h1>
-      <p className="checkout-summary">
-        Order summary:{items.length} burger(s), total {totalPrice}
-      </p>
-        <InputField
-      label="Name"
-      value={name}
-      onChangeText= {(text) => setName(text)}
-      error={error.name}
-       />
+    <main className="checkout-page container">
+      <Seo
+        title="Checkout"
+        description="Enter your contact and delivery details to place your Burger Taste order."
+        image="/og-share-image.jpg"
+        path="/checkout"
+      />
+      <header className="checkout-heading">
+        <p>Almost there</p>
+        <h1>Checkout</h1>
+      </header>
 
-        <InputField
-      label="Phone"
-      value={phone}
-      onChangeText= {(text) => setPhone(text)}
-      error={error.phone}
-      keyboardType="tel"
-       />
+      <div className="checkout-layout">
+        <section className="checkout-form-card" aria-label="Delivery details">
+          <div className="checkout-form-section">
+            <h2>Contact details</h2>
+            <InputField
+              label="Name"
+              value={name}
+              onChangeText={setName}
+              error={error.name}
+            />
+            <InputField
+              label="Phone"
+              value={phone}
+              onChangeText={setPhone}
+              error={error.phone}
+              keyboardType="tel"
+            />
+          </div>
 
-        <InputField
-      label="Address"
-      value={address}
-      onChangeText= {(text) => setAddress(text)}
-      error={error.name}
-       />
+          <div className="checkout-form-section">
+            <h2>Delivery address</h2>
+            <InputField
+              label="Address"
+              value={address}
+              onChangeText={setAddress}
+              error={error.address}
+            />
+          </div>
 
-       {serverError !== "" && <p className="checkout-error">{serverError}</p>}
+          {serverError !== "" && (
+            <p className="checkout-error" role="alert">
+              {serverError}
+            </p>
+          )}
 
-       <CustomButton
-          title = "Address"
-          onPress={handleSubmit}
-          loading = {submitting}
-          disabled={items.length === 0}
-       />
-    </div>
-  )
+          <CustomButton
+            title="Place Order"
+            onPress={handleSubmit}
+            loading={submitting}
+            disabled={items.length === 0}
+          />
+          <p className="checkout-reassurance">
+            We will contact you to confirm your order.
+          </p>
+          <Link className="checkout-back-link" to="/cart">
+            Back to cart
+          </Link>
+        </section>
+
+        <aside className="checkout-summary-card">
+          <h2>Order summary</h2>
+          <ul className="checkout-items">
+            {items.map((item) => (
+              <li key={item.id}>
+                <img
+                  src={item.image}
+                  alt=""
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                />
+                <span className="checkout-item-name">
+                  {item.name} <span>× {item.quantity}</span>
+                </span>
+                <strong>{formatPrice(item.price * item.quantity)}</strong>
+              </li>
+            ))}
+          </ul>
+          <div className="checkout-total">
+            <span>Total</span>
+            <strong>{formatPrice(totalPrice)}</strong>
+          </div>
+        </aside>
+      </div>
+    </main>
+  );
 }
 
 export default Checkout;

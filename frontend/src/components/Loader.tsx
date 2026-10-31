@@ -1,34 +1,28 @@
 import { memo } from "react";
+import "../styles/loader.css";
 
 export const LoadingView = memo(() => {
-    return (
-        <>
-            <style>{`
-                @keyframes spin {
-                    to { transform: rotate(360deg); }
-                }
-            `}</style>
-            <div style={styles.base}>
-                <div style={styles.view} />
-            </div>
-        </>
-    );
+  return (
+    <div
+      className="loading-view"
+      role="status"
+      aria-label="Loading"
+    >
+      <span className="loading-spinner" aria-hidden="true" />
+    </div>
+  );
 });
 
-const styles = {
-    base: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        width: '100%',
-    },
-    view: {
-        width: 40,
-        height: 40,
-        border: '4px solid #e5e7eb',
-        borderTopColor: '#007AFF',
-        borderRadius: '50%',
-        animation: 'spin 0.8s linear infinite',
-    },
-};
+export const ProductSkeleton = memo(() => {
+  return (
+    <div
+      className="product-skeleton"
+      aria-hidden="true"
+    >
+      <span className="product-skeleton-image" />
+      <span className="product-skeleton-category" />
+      <span className="product-skeleton-title" />
+      <span className="product-skeleton-price" />
+    </div>
+  );
+});
