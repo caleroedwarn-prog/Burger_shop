@@ -13,7 +13,7 @@ const useProduct = (id: number) => {
 
         try {
             const data = await getProduct(id);
-            setProduct(data)
+            setProduct([data])
         } catch {
             setError("Unable to load products")
         } finally {
