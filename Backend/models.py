@@ -26,7 +26,7 @@ class Order(Base):
     items: Mapped[list["OrderItem"]] = relationship(back_populates="order")
 
 class OrderItem(Base):
-    __tablename__ = "order-items"
+    __tablename__ = "order_items"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), nullable=False)
