@@ -1,19 +1,21 @@
 export type OrderItem = {
-    productId: number,
+    product_id: number,
     quantity: number
 }
 
 export type OrderRequest = {
     customerName: string,
-    phone: number,
+    phone: string,
     address: string,
     items : OrderItem[]
 }
 
 export type Order = {
     id: number,
-    items: OrderItem[],
+    customerName: string,
+    phone: string,
+    address: string,
     total:  number,
     status: string,
-    createdAt: Date
+    createdAt: string
 }

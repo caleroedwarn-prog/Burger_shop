@@ -23,7 +23,7 @@ export const navLinks = [
 ] as const;
 
 export const socials: SocialLink[] = [
-  { name: "WhatsApp", href: "https://wa.me/237688029814", icon: FaWhatsapp },
+  { name: "WhatsApp", href: "https://wa.me/237688029813", icon: FaWhatsapp },
   {
     name: "Facebook",
     href: "https://www.facebook.com/nick.postarel",
@@ -31,7 +31,7 @@ export const socials: SocialLink[] = [
   },
   {
     name: "Instagram",
-    href: "https://www.instagram.com/YOUR_INSTAGRAM_HANDLE",
+    href: "https://www.instagram.com/caleroedwarn",
     icon: FaInstagram,
   },
   {
@@ -41,7 +41,7 @@ export const socials: SocialLink[] = [
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/YOUR_LINKEDIN_SLUG",
+    href: "https://www.linkedin.com/in/buameemmanuel",
     icon: FaLinkedinIn,
   },
   { name: "X", href: "https://x.com/Calero", icon: FaXTwitter },

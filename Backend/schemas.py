@@ -21,10 +21,10 @@ class OrderItemIn(BaseModel):
 
 class OrderCreate(BaseModel):
     #The whole order the app sends
-    customerName: str = Field(ge=2)
-    phone: str = Field(ge = 9)
-    address: str = Field(ge = 3)
-    items: list[OrderItemIn] = Field(ge=1)
+    customerName: str = Field(min_length=2)
+    phone: str = Field(min_length=9)
+    address: str = Field(min_length=3)
+    items: list[OrderItemIn]  = Field(min_length = 1)
 
 class OrderOut(BaseModel):
     #What we send back after savings

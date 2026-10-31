@@ -52,13 +52,13 @@ function Checkout() {
     setSubmitting(true)
 
     const orderItems: OrderItem[] = items.map((item) => ({
-      productId: item.id,
+      product_id: item.id,
       quantity: item.quantity
     }))
 
     const order: OrderRequest = {
       customerName: name,
-      phone: Number(phone),
+      phone,
       address: address,
       items: orderItems
     }
